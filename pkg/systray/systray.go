@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/adrielparedes/kogito-local-server/pkg/images"
 	"github.com/adrielparedes/kogito-local-server/pkg/server"
 	"github.com/getlantern/systray"
-	"github.com/getlantern/systray/example/icon"
 )
 
 const NAME = "Kogito"
@@ -83,7 +83,7 @@ func CheckStatus() bool {
 
 func onReady() {
 
-	systray.SetTemplateIcon(icon.Data, icon.Data)
+	systray.SetTemplateIcon(images.Data, images.Data)
 	systray.SetTooltip(NAME)
 
 	statusItem := systray.AddMenuItem(SERVER_STATUS_OFF, SERVER_STATUS)
