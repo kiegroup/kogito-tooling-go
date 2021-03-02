@@ -1,1 +1,0 @@
-# kogito-local-server
