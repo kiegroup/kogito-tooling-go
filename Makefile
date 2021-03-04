@@ -24,7 +24,6 @@ build-mac:
 build-linux:
 	GOOS=linux GOARCH=amd64 go build -o build/linux/kogito main.go
 
-
 build-win:
 	GOOS=windows GOARCH=386 go build -ldflags "-H=windowsgui" -o build/win/kogito main.go
 

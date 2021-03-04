@@ -77,7 +77,6 @@ func (p *Proxy) Stop() {
 
 func proxyHandler(proxy *httputil.ReverseProxy, cmd *exec.Cmd) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(r)
 		r.Host = r.URL.Host
 		proxy.ServeHTTP(w, r)
 	}

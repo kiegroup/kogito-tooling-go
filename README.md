@@ -36,3 +36,11 @@ In the `config.yaml` file you will be able to configure Proxy, Runner and Modele
 - Provide compilation pipeline for Windows
 - Provide compilation pipeline for Linux
 - Limit GraalVM Heap Size
+- Check version alignment between Online Editor and DMN Runner.
+- Installers for all platforms
+
+## Extrass
+
+### How do I create the image.go?
+
+`cat icon2.png | /Users/aparedes/go/bin/2goarray Data images > icon.go`
