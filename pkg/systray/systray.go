@@ -2,22 +2,16 @@ package systray
 
 import (
 	"fmt"
+	"log"
 	"net/http"
+	"os/exec"
+	"runtime"
 	"time"
 
 	"github.com/adrielparedes/kogito-local-server/pkg/images"
 	"github.com/adrielparedes/kogito-local-server/pkg/server"
 	"github.com/getlantern/systray"
 )
-
-const NAME = "Kogito"
-const URL = "http://127.0.0.1:8000"
-const SERVER_STATUS = "Server Status"
-const SERVER_STATUS_ON = SERVER_STATUS + ": ON"
-const SERVER_STATUS_OFF = SERVER_STATUS + ": OFF"
-const START = "Start"
-const STOP = "Stop"
-const QUIT = "Quit"
 
 var proxy *server.Proxy = &server.Proxy{}
 
@@ -86,11 +80,16 @@ func onReady() {
 	systray.SetTemplateIcon(images.Data, images.Data)
 	systray.SetTooltip(NAME)
 
-	statusItem := systray.AddMenuItem(SERVER_STATUS_OFF, SERVER_STATUS)
+	openModeler := systray.AddMenuItem(BUSINESS_MODELER, BUSINESS_MODELER)
+
+	statusItem := systray.AddMenuItem(SERVER_STATUS, SERVER_STATUS)
+
+	systray.AddMenuItem(OTHER_KOGITO_SERVICES, OTHER_KOGITO_SERVICES)
 
 	systray.AddSeparator()
 
 	toggleItem := systray.AddMenuItem(START, START)
+	restartItem := systray.AddMenuItem(RESTART, RESTART)
 
 	systray.AddSeparator()
 	quitItem := systray.AddMenuItem(QUIT, QUIT)
@@ -99,6 +98,15 @@ func onReady() {
 
 	for {
 		select {
+		case <-openModeler.ClickedCh:
+			openBrowser(MODELER_LINK)
+		case <-restartItem.ClickedCh:
+			if CheckStatus() {
+				Stop()
+				Start()
+			} else {
+				Start()
+			}
 		case <-toggleItem.ClickedCh:
 			if CheckStatus() {
 				Stop()
@@ -110,5 +118,23 @@ func onReady() {
 			systray.Quit()
 			return
 		}
+	}
+}
+
+func openBrowser(url string) {
+	var err error
+
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", url).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+	if err != nil {
+		log.Fatal(err)
 	}
 }

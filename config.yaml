@@ -1,0 +1,9 @@
+proxy:
+  ip: 127.0.0.1
+  port: 8080
+runner:
+  ip: 127.0.0.1
+  port: 8000
+  location: runner/jitexecutor-runner-2.0.0-SNAPSHOT-runner.jar
+modeler:
+  link: https://ljmotta.github.io/kogito-tooling/#/

@@ -1,8 +1,10 @@
 package server
 
 import (
+	"bufio"
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
@@ -10,6 +12,8 @@ import (
 	"os/exec"
 	"time"
 
+	"github.com/adrielparedes/kogito-local-server/pkg/config"
+	"github.com/adrielparedes/kogito-local-server/pkg/utils"
 	"github.com/gorilla/mux"
 )
 
@@ -20,8 +24,20 @@ type Proxy struct {
 
 func (p *Proxy) Start() {
 
-	target, err := url.Parse("http://localhost:8080")
-	p.cmd = exec.Command("java", "-jar", "./runner/jitexecutor-runner-2.0.0-SNAPSHOT-runner.jar")
+	var config config.Config
+	conf := config.GetConfig()
+
+	target, err := url.Parse("http://" + conf.Runner.IP + ":" + conf.Runner.Port)
+	p.cmd = exec.Command("java", "-Dquarkus.http.port="+conf.Runner.Port, "-jar", utils.GetBaseDir()+"/"+conf.Runner.Location)
+	stdout, _ := p.cmd.StdoutPipe()
+
+	go func() {
+		scanner := bufio.NewScanner(stdout)
+		for scanner.Scan() {
+			msg := scanner.Text()
+			fmt.Printf("msg: %s\n", msg)
+		}
+	}()
 
 	go startRunner(p.cmd)
 
@@ -32,12 +48,12 @@ func (p *Proxy) Start() {
 	proxy := httputil.NewSingleHostReverseProxy(target)
 
 	r := mux.NewRouter()
-	r.HandleFunc("/", proxyHandler(proxy, p.cmd))
 	r.HandleFunc("/ping", pingHandler)
+	r.PathPrefix("/").HandlerFunc(proxyHandler(proxy, p.cmd))
 
 	p.srv = &http.Server{
 		Handler:      r,
-		Addr:         "127.0.0.1:8000",
+		Addr:         conf.Proxy.IP + ":" + conf.Proxy.Port,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
@@ -50,7 +66,7 @@ func (p *Proxy) Stop() {
 
 	stopRunner(p.cmd)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
+	ctx, cancel := context.WithTimeout(context.TODO(), time.Second*15)
 	defer cancel()
 
 	if err := p.srv.Shutdown(ctx); err != nil {
@@ -61,6 +77,7 @@ func (p *Proxy) Stop() {
 
 func proxyHandler(proxy *httputil.ReverseProxy, cmd *exec.Cmd) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println(r)
 		r.Host = r.URL.Host
 		proxy.ServeHTTP(w, r)
 	}
@@ -74,7 +91,7 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func startRunner(cmd *exec.Cmd) {
-	if err := cmd.Run(); err != nil {
+	if err := cmd.Start(); err != nil {
 		log.Fatal(err)
 	}
 }
