@@ -6,5 +6,10 @@ import (
 )
 
 func GetBaseDir() string {
-	return filepath.Dir(os.Args[0])
+	env := os.Getenv("ENV")
+	if env != "dev" {
+		return filepath.Dir(os.Args[0])
+	} else {
+		return "./"
+	}
 }
