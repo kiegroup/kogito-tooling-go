@@ -10,12 +10,16 @@ import (
 	"net/http/httputil"
 	"net/url"
 	"os/exec"
+	"strconv"
 	"time"
 
 	"github.com/adrielparedes/kogito-local-server/pkg/config"
 	"github.com/adrielparedes/kogito-local-server/pkg/utils"
 	"github.com/gorilla/mux"
+	"github.com/phayes/freeport"
 )
+
+var URL string = ""
 
 type Proxy struct {
 	srv *http.Server
@@ -27,8 +31,11 @@ func (p *Proxy) Start() {
 	var config config.Config
 	conf := config.GetConfig()
 
-	target, err := url.Parse("http://" + conf.Runner.IP + ":" + conf.Runner.Port)
-	p.cmd = exec.Command("java", "-Dquarkus.http.port="+conf.Runner.Port, "-jar", utils.GetBaseDir()+"/"+conf.Runner.Location)
+	runnerPort := getFreePort()
+	URL = "http://" + conf.Runner.IP + ":" + runnerPort
+	target, err := url.Parse(URL)
+
+	p.cmd = exec.Command("java", "-Dquarkus.http.port="+runnerPort, "-jar", utils.GetBaseDir()+"/"+conf.Runner.Location)
 	stdout, _ := p.cmd.StdoutPipe()
 
 	go func() {
@@ -75,6 +82,22 @@ func (p *Proxy) Stop() {
 	log.Println("Shutdown complete")
 }
 
+func (p *Proxy) CheckStatus() bool {
+	started := false
+
+	resp, err := http.Get(URL)
+	if err != nil {
+		fmt.Println(err.Error())
+	} else {
+		fmt.Println(string(resp.StatusCode) + resp.Status)
+		if resp.StatusCode == 200 {
+			started = true
+		}
+	}
+
+	return started
+}
+
 func proxyHandler(proxy *httputil.ReverseProxy, cmd *exec.Cmd) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		r.Host = r.URL.Host
@@ -97,4 +120,12 @@ func startRunner(cmd *exec.Cmd) {
 
 func stopRunner(cmd *exec.Cmd) {
 	cmd.Process.Kill()
+}
+
+func getFreePort() string {
+	port, err := freeport.GetFreePort()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return strconv.Itoa(port)
 }

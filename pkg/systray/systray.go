@@ -3,7 +3,6 @@ package systray
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os/exec"
 	"runtime"
 	"time"
@@ -60,19 +59,7 @@ func CheckAndStatus(toggleItem *systray.MenuItem, statusItem *systray.MenuItem) 
 }
 
 func CheckStatus() bool {
-	started := false
-
-	resp, err := http.Get(URL)
-	if err != nil {
-		fmt.Println(err.Error())
-	} else {
-		fmt.Println(string(resp.StatusCode) + resp.Status)
-		if resp.StatusCode == 200 {
-			started = true
-		}
-	}
-
-	return started
+	return proxy.CheckStatus()
 }
 
 func onReady() {

@@ -1,7 +1,6 @@
 package systray
 
 const NAME = "Kogito"
-const URL = "http://127.0.0.1:8000"
 const SERVER_STATUS = "DMN Runner Status"
 const SERVER_STATUS_ON = SERVER_STATUS + ": ON"
 const SERVER_STATUS_OFF = SERVER_STATUS + ": OFF"
