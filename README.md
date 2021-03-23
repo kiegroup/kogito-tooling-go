@@ -4,6 +4,10 @@
 
 Golang version: `1.15`
 
+## Application Parameters
+
+- `-p <PORT_NUMBER>`: Sets app port, otherwise it will use config.yaml port.
+
 ## Run
 
 To run simply execute `make run`.
@@ -28,7 +32,7 @@ The runner must be compiled and copied to `runner` folder. Remember to change th
 
 ## Configuration
 
-In the `config.yaml` file you will be able to configure Proxy, Runner and Modeler properties as ip, port, runner location or modeler URL.
+In the `config.yaml` file you will be able to configure Proxy, Runner and Modeler properties as runner location or modeler URL. Runner ip is `127.0.0.1` and port is a random free port.
 
 ## Next Steps
 

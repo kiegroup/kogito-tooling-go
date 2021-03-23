@@ -22,8 +22,9 @@ import (
 var URL string = ""
 
 type Proxy struct {
-	srv *http.Server
-	cmd *exec.Cmd
+	srv  *http.Server
+	cmd  *exec.Cmd
+	Port int
 }
 
 func (p *Proxy) Start() {
@@ -58,12 +59,16 @@ func (p *Proxy) Start() {
 	r.HandleFunc("/ping", pingHandler)
 	r.PathPrefix("/").HandlerFunc(proxyHandler(proxy, p.cmd))
 
+	addr := conf.Proxy.IP + ":" + getProxyPort(p, config)
+
 	p.srv = &http.Server{
 		Handler:      r,
-		Addr:         conf.Proxy.IP + ":" + conf.Proxy.Port,
+		Addr:         addr,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
+
+	fmt.Printf("Server started: %s \n", addr)
 
 	go p.srv.ListenAndServe()
 }
@@ -128,4 +133,14 @@ func getFreePort() string {
 		log.Fatal(err)
 	}
 	return strconv.Itoa(port)
+}
+
+func getProxyPort(p *Proxy, conf config.Config) string {
+	port := conf.Proxy.Port
+	fmt.Printf("%s\n", port)
+	fmt.Printf("%d\n", p.Port)
+	if p.Port != 0 {
+		port = strconv.Itoa(p.Port)
+	}
+	return port
 }

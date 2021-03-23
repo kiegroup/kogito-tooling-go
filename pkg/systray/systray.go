@@ -12,9 +12,13 @@ import (
 	"github.com/getlantern/systray"
 )
 
-var proxy *server.Proxy = &server.Proxy{}
+var proxy *server.Proxy
 
-func Systray() {
+func Systray(port int) {
+
+	proxy = &server.Proxy{}
+	proxy.Port = port
+
 	onExit := func() {
 	}
 

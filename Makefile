@@ -39,4 +39,4 @@ win:clean build-win copy-win
 build: clean build-default copy-default
 
 run:
-	ENV=dev go run main.go
+	ENV=dev go run main.go -port 3000
