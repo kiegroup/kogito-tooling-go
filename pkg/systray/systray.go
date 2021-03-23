@@ -70,6 +70,7 @@ func onReady() {
 	openModeler := systray.AddMenuItem(BUSINESS_MODELER, BUSINESS_MODELER)
 
 	statusItem := systray.AddMenuItem(SERVER_STATUS, SERVER_STATUS)
+	statusItem.Disable()
 
 	systray.AddMenuItem(OTHER_KOGITO_SERVICES, OTHER_KOGITO_SERVICES)
 
