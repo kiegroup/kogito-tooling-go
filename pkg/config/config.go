@@ -10,8 +10,6 @@ import (
 
 type Config struct {
 	Runner struct {
-		IP       string `yaml:"ip"`
-		Port     string `yaml:"port"`
 		Location string `yaml:"location"`
 	} `yaml:"runner"`
 	Proxy struct {

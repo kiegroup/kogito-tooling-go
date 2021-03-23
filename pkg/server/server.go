@@ -32,7 +32,7 @@ func (p *Proxy) Start() {
 	conf := config.GetConfig()
 
 	runnerPort := getFreePort()
-	URL = "http://" + conf.Runner.IP + ":" + runnerPort
+	URL = "http://127.0.0.1:" + runnerPort
 	target, err := url.Parse(URL)
 
 	p.cmd = exec.Command("java", "-Dquarkus.http.port="+runnerPort, "-jar", utils.GetBaseDir()+"/"+conf.Runner.Location)
