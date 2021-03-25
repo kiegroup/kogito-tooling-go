@@ -14,7 +14,7 @@ type Config struct {
 	} `yaml:"runner"`
 	Proxy struct {
 		IP   string `yaml:"ip"`
-		Port string `yaml:"port"`
+		Port int    `yaml:"port"`
 	} `yaml:"proxy"`
 	Modeler struct {
 		Link string `yaml:"link"`

@@ -2,13 +2,18 @@ package main
 
 import (
 	"flag"
+	"fmt"
 
-	"github.com/adrielparedes/kogito-local-server/pkg/systray"
+	"github.com/adrielparedes/kogito-local-server/pkg/config"
+	"github.com/adrielparedes/kogito-local-server/pkg/kogito"
 )
 
 func main() {
 
-	port := flag.Int("p", 0, "DMN Runner Port")
+	var config config.Config
+	conf := config.GetConfig()
+	fmt.Println(conf.Proxy.Port)
+	port := flag.Int("p", conf.Proxy.Port, "DMN Runner Port")
 	flag.Parse()
-	systray.Systray(*port)
+	kogito.Systray(*port)
 }
