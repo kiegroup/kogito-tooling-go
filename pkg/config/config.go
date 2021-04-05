@@ -11,6 +11,9 @@ import (
 var f embed.FS
 
 type Config struct {
+	App struct {
+		Version string `yaml:"version"`
+	} `yaml:"app"`
 	Runner struct {
 		Location string `yaml:"location"`
 	} `yaml:"runner"`

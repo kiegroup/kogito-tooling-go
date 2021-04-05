@@ -12,6 +12,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"os/signal"
 	"path/filepath"
 	"strconv"
 	"time"
@@ -86,8 +87,22 @@ func (self *Proxy) Start() {
 	fmt.Printf("Server started: %s \n", addr)
 
 	go self.srv.ListenAndServe()
+	go self.GracefulShutdown()
 
 	self.Refresh()
+
+}
+
+func (self *Proxy) GracefulShutdown() {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	<-c
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	log.Println("Signal detected, shutting down...")
+	self.Stop()
+	self.srv.Shutdown(ctx)
+	os.Exit(0)
 }
 
 func (self *Proxy) Stop() {
@@ -166,9 +181,11 @@ func proxyHandler(proxy *httputil.ReverseProxy, cmd *exec.Cmd) func(w http.Respo
 }
 
 func pingHandler(w http.ResponseWriter, r *http.Request) {
+	var config config.Config
+	conf := config.GetConfig()
 	w.WriteHeader(http.StatusOK)
-	result := map[string]string{"status": "ok"}
-	json, _ := json.Marshal(result)
+	// result := map[string]string{"status": "ok"}
+	json, _ := json.Marshal(conf)
 	w.Write(json)
 }
 
