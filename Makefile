@@ -2,22 +2,6 @@
 clean:
 	$(RM) -rf ./build
 
-copy-mac:
-	cp -r runner/ build/darwin/runner
-	cp config.yaml build/darwin/
-
-copy-linux:
-	cp -r runner/ build/linux/runner
-	cp config.yaml build/linux/
-
-copy-win:
-	cp -r runner/ build/win/runner
-	cp config.yaml build/win/
-
-copy-default:
-	cp -r runner/ build/default/runner
-	cp config.yaml build/default/
-
 build-mac: 
 	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/kogito main.go
 
@@ -30,13 +14,13 @@ build-win:
 build-default:
 	go build -o build/default/kogito main.go
 
-mac: clean build-mac copy-mac
+mac: clean build-mac 
 
-linux: clean build-linux copy-linux
+linux: clean build-linux 
 
-win:clean build-win copy-win
+win:clean build-win
 
-build: clean build-default copy-default
+build: clean build-default
 
 run:
 	ENV=dev go run main.go

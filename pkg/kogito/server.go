@@ -3,13 +3,16 @@ package kogito
 import (
 	"bufio"
 	"context"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"strconv"
 	"time"
 
@@ -19,6 +22,9 @@ import (
 	"github.com/phayes/freeport"
 )
 
+//go:embed runner
+var runner []byte
+
 type Proxy struct {
 	view       *KogitoSystray
 	srv        *http.Server
@@ -27,10 +33,14 @@ type Proxy struct {
 	URL        string
 	Port       int
 	RunnerPort int
+	runnerPath string
 }
 
-func (self *Proxy) New() {
-	self.Started = false
+func NewProxy(port int) *Proxy {
+	proxy := &Proxy{Started: false}
+	proxy.runnerPath = proxy.createRunner()
+	proxy.Port = port
+	return proxy
 }
 
 func (self *Proxy) Start() {
@@ -42,8 +52,10 @@ func (self *Proxy) Start() {
 	runnerPort := strconv.Itoa(self.RunnerPort)
 	self.URL = "http://127.0.0.1:" + runnerPort
 	target, err := url.Parse(self.URL)
+	utils.Check(err)
 
-	self.cmd = exec.Command("java", "-Dquarkus.http.port="+runnerPort, "-jar", utils.GetBaseDir()+"/"+conf.Runner.Location)
+	self.cmd = exec.Command(self.runnerPath, "-Dquarkus.http.port="+runnerPort)
+
 	stdout, _ := self.cmd.StdoutPipe()
 
 	go func() {
@@ -55,10 +67,6 @@ func (self *Proxy) Start() {
 	}()
 
 	go startRunner(self.cmd)
-
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	proxy := httputil.NewSingleHostReverseProxy(target)
 
@@ -123,6 +131,33 @@ func (self *Proxy) Refresh() {
 	self.view.Refresh()
 }
 
+func (self *Proxy) createRunner() string {
+	cacheDir, cacheError := os.UserCacheDir()
+	utils.Check(cacheError)
+
+	cachePath := filepath.Join(cacheDir, "org.kogito")
+
+	if _, err := os.Stat(cachePath); os.IsNotExist(err) {
+		os.Mkdir(cachePath, os.ModePerm)
+	}
+
+	runnerPath := filepath.Join(cachePath, "runner")
+
+	if _, err := os.Stat(runnerPath); err == nil {
+		os.Remove(runnerPath)
+	}
+
+	f, err := os.Create(runnerPath)
+	utils.Check(err)
+
+	f.Chmod(0777)
+
+	_, err = f.Write(runner)
+	utils.Check(err)
+	f.Close()
+	return runnerPath
+}
+
 func proxyHandler(proxy *httputil.ReverseProxy, cmd *exec.Cmd) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		r.Host = r.URL.Host
@@ -138,9 +173,7 @@ func pingHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func startRunner(cmd *exec.Cmd) {
-	if err := cmd.Start(); err != nil {
-		log.Fatal(err)
-	}
+	utils.Check(cmd.Start())
 }
 
 func stopRunner(cmd *exec.Cmd) {
@@ -149,8 +182,6 @@ func stopRunner(cmd *exec.Cmd) {
 
 func getFreePort() int {
 	port, err := freeport.GetFreePort()
-	if err != nil {
-		log.Fatal(err)
-	}
+	utils.Check(err)
 	return port
 }

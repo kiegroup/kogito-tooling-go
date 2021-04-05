@@ -1,0 +1,7 @@
+proxy:
+  ip: 127.0.0.1
+  port: 8080
+runner:
+  location: runner/jitexecutor-dmnexecutor-2.0.0-SNAPSHOT-runner.jar
+modeler:
+  link: https://ljmotta.github.io/kogito-tooling/#/

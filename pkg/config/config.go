@@ -1,12 +1,14 @@
 package config
 
 import (
-	"io/ioutil"
+	"embed"
 	"log"
 
-	"github.com/adrielparedes/kogito-local-server/pkg/utils"
 	"gopkg.in/yaml.v2"
 )
+
+//go:embed config.yaml
+var f embed.FS
 
 type Config struct {
 	Runner struct {
@@ -23,7 +25,7 @@ type Config struct {
 
 func (c *Config) GetConfig() *Config {
 
-	yamlFile, err := ioutil.ReadFile(utils.GetBaseDir() + "/config.yaml")
+	yamlFile, err := f.ReadFile("config.yaml")
 	if err != nil {
 		log.Printf("yamlFile.Get err   #%v ", err)
 	}
