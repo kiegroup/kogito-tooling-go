@@ -1,4 +1,6 @@
 
+all: build
+
 clean:
 	$(RM) -rf ./build
 

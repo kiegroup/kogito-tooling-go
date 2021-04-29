@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Golang version: `1.15`
+Golang version: `1.16`
 
 ## Application Parameters
 
@@ -28,7 +28,17 @@ The binaries are going to appear in each OS folder. But if you execute just `mak
 
 ## Runner
 
-The runner must be compiled and copied to `runner` folder. Remember to change the configuration file to match the runner name.
+The runner must be compiled from the "kogito-apps" repository and copied to the `pkg/kogito` folder.
+
+## Fedora
+
+To use this application on Fedora, it's necessary to install some additional packages and enable the Gnome App Indicator.
+Firstly install the following packages:
+
+- `sudo dnf install gtk3-devel libappindicator-gtk3-devel-12.10.0-29.fc33.x86_64`
+
+To enable the App Indicator extension
+https://extensions.gnome.org/extension/615/appindicator-support/
 
 ## Configuration
 

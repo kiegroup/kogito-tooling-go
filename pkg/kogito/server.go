@@ -3,7 +3,7 @@ package kogito
 import (
 	"bufio"
 	"context"
-	_ "embed"
+
 	"encoding/json"
 	"fmt"
 	"log"
@@ -23,9 +23,6 @@ import (
 	"github.com/phayes/freeport"
 )
 
-//go:embed runner
-var runner []byte
-
 type Proxy struct {
 	view       *KogitoSystray
 	srv        *http.Server
@@ -37,9 +34,11 @@ type Proxy struct {
 	runnerPath string
 }
 
-func NewProxy(port int) *Proxy {
+func NewProxy(port int, runner []byte) *Proxy {
+	// fmt.Printf("runner data: %s \n", runner)
+
 	proxy := &Proxy{Started: false}
-	proxy.runnerPath = proxy.createRunner()
+	proxy.runnerPath = proxy.createRunner(runner)
 	proxy.Port = port
 	return proxy
 }
@@ -146,7 +145,7 @@ func (self *Proxy) Refresh() {
 	self.view.Refresh()
 }
 
-func (self *Proxy) createRunner() string {
+func (self *Proxy) createRunner(runner []byte) string {
 	cacheDir, cacheError := os.UserCacheDir()
 	utils.Check(cacheError)
 
