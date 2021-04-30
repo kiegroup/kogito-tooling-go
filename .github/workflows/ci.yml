@@ -30,7 +30,5 @@ jobs:
         with:
           go-version: '1.16'
 
-      - uses: textbook/git-checkout-submodule-action@2.1.1
-
       - name: Build
-        run: sudo apt update && sudo apt install build-essential maven -y && make
+        run: ls -la && git submodule update --init && sudo apt update && sudo apt install build-essential maven -y && make
