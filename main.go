@@ -10,8 +10,8 @@ import (
 )
 
 // Embed the jitrunner into the runner variable, to produce a self-contained binary.
-//go:embed kogito-apps/jitexecutor/jitexecutor-runner/target/jitexecutor-runner-2.0.0-SNAPSHOT-runner
-var runner []byte
+//go:embed jitexecutor
+var jitexecutor []byte
 
 func main() {
 
@@ -20,5 +20,5 @@ func main() {
 	fmt.Println(conf.Proxy.Port)
 	port := flag.Int("p", conf.Proxy.Port, "DMN Runner Port")
 	flag.Parse()
-	kogito.Systray(*port, runner)
+	kogito.Systray(*port, jitexecutor)
 }
