@@ -34,4 +34,4 @@ jobs:
         run: git submodule update
       
       - name: Build
-        run: apt update && apt install build-essential maven -y && make
+        run: sudo apt update && sudo apt install build-essential maven -y && make
