@@ -1,7 +1,7 @@
 
 all: build
 
-build: clean build-default 
+build: clean jitexecutor build-default 
 
 clean:
 	$(RM) -rf ./build

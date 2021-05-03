@@ -10,7 +10,7 @@ import (
 )
 
 // Embed the jitrunner into the runner variable, to produce a self-contained binary.
-//go:embed jitexecutor
+// go:embed jitexecutor
 var jitexecutor []byte
 
 func main() {
