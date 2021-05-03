@@ -27,7 +27,7 @@ build-default:
 jitexecutor: build-jitexecutor copy-jitexecutor
 
 build-jitexecutor:
-	mvn clean package -DskipTests -Pnative -f ./kogito-apps/jitexecutor
+	mvn clean package -DskipTests -Pnative -f ./kogito-apps/jitexecutor -X
 
 copy-jitexecutor:
 	cp ./kogito-apps/jitexecutor/jitexecutor-runner/target/jitexecutor-runner-*-SNAPSHOT-runner jitexecutor
