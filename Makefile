@@ -1,7 +1,13 @@
 
-all: build
+all: build build-default
 
-build: clean jitexecutor build-default 
+build: clean jitexecutor
+
+linux: build build-linux
+
+mac: build build-mac
+
+windows: build build-windows
 
 clean:
 	$(RM) -rf ./build
@@ -9,20 +15,20 @@ clean:
 mac: clean build-mac 
 
 build-mac: 
-	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/kogito main.go
+	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/runner main.go
 
 linux: clean build-linux 
 
 build-linux:
-	GOOS=linux GOARCH=amd64 go build -o build/linux/kogito main.go
+	GOOS=linux GOARCH=amd64 go build -o build/linux/runner main.go
 
 win:clean build-win
 
 build-win:
-	GOOS=windows GOARCH=386 go build -ldflags "-H=windowsgui" -o build/win/kogito main.go
+	GOOS=windows GOARCH=386 go build -ldflags "-H=windowsgui" -o build/win/runner main.go
 
 build-default:
-	go build -o build/default/kogito main.go
+	go build -o build/default/runner main.go
 
 jitexecutor: build-jitexecutor copy-jitexecutor
 
