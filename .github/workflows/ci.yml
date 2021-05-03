@@ -51,7 +51,8 @@ jobs:
       - name: Build macOS
         if: matrix.os == 'macos-latest'
         run: |
-          brew install maven make &&
+          brew install maven make && \
+          gu install native-image && \
           make macos
 
       - name: Upload macOS runner
@@ -60,7 +61,6 @@ jobs:
         with:
           name: runner-macos
           path: "./build/darwin/runner"
-
 
       - name: Build Linux
         if: matrix.os == 'ubuntu-latest'
@@ -80,3 +80,15 @@ jobs:
         with:
           name: runner-linux
           path: "./build/linux/runner-linux.tar.gz"
+
+      - name: Build Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          make win
+
+      - name: Upload Windows runner
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v2
+        with:
+          name: runner-windows
+          path: "./build/win/runner-windows"
