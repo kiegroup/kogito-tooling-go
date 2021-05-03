@@ -14,7 +14,7 @@ clean:
 	$(RM) -rf ./build
 
 # macOS
-macos: clean all-jitexecutor build-mac package-macos
+macos: clean all-jitexecutor build-macos package-macos
 
 build-macos: 
 	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/runner main.go
