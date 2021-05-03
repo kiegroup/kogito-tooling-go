@@ -42,7 +42,6 @@ jobs:
           go-version: '1.16'
 
       - name: Checkout submodules
-        uses: actions/checkout@v2
         shell: bash
         run: |
           auth_header="$(git config --local --get http.https://github.com/.extraheader)"
