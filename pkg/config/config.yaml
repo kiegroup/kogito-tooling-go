@@ -1,6 +1,6 @@
 proxy:
   ip: 127.0.0.1
-  port: 45968
+  port: 8080
 modeler:
   link: https://kiegroup.github.io/kogito-online-staging/dmn-runner/#/
 app:
