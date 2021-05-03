@@ -37,7 +37,6 @@ win:clean all-jitexecutor build-win
 
 build-win:
 	GOOS=windows GOARCH=386 go build -ldflags "-H=windowsgui" -o build/win/runner main.go
-	chmod +x ./build/win/runner
 
 # Jit Executor
 all-jitexecutor: build-jitexecutor copy-jitexecutor
