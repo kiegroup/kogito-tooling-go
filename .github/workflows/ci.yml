@@ -64,5 +64,5 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v2
         with:
-          name: runner-linux
+          name: runner-linux.tar.gz
           path: "./build/linux/runner-linux.tar.gz"
