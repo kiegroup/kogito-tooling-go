@@ -21,11 +21,13 @@ build-mac:
 	chmod +x ./build/darwin/runner
 
 # Linux
-linux: clean all-jitexecutor build-linux 
+linux: clean all-jitexecutor build-linux package-linux
 
 build-linux:
 	GOOS=linux GOARCH=amd64 go build -o build/linux/runner main.go
-	chmod +x ./build/linux/runner
+
+package-linux:
+	cd build/linux && tar -pcvzf runner-linux.tar.gz runner
 
 # Windows
 win:clean all-jitexecutor build-win
