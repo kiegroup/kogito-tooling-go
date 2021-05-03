@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest]
+        os: [macos-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -48,6 +48,20 @@ jobs:
           git submodule sync --recursive
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
 
+      - name: Build macOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install maven make &&
+          make mac
+
+      - name: Upload macOS runner
+        if: matrix.os == 'macos-latest'
+        uses: actions/upload-artifact@v2
+        with:
+          name: runner-macos
+          path: "./build/darwin/runner"
+
+
       - name: Build Linux
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -64,5 +78,5 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v2
         with:
-          name: runner-linux.tar.gz
+          name: runner-linux
           path: "./build/linux/runner-linux.tar.gz"

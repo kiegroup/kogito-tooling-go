@@ -14,11 +14,14 @@ clean:
 	$(RM) -rf ./build
 
 # macOS
-mac: clean all-jitexecutor build-mac
+macos: clean all-jitexecutor build-mac package-macos
 
-build-mac: 
+build-macos: 
 	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/runner main.go
 	chmod +x ./build/darwin/runner
+
+package-macos:
+	cd build/darwin && zip -qry runner-macos.zip runner
 
 # Linux
 linux: clean all-jitexecutor build-linux package-linux
