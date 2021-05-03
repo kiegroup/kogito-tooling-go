@@ -39,4 +39,12 @@ jobs:
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
 
       - name: Build
-        run: sudo apt update && sudo apt install build-essential maven -y && make
+        run: |
+          sudo apt update && \
+          sudo apt install -y \
+          build-essential \
+          maven \
+          libgtk-3-dev \
+          libappindicator3-dev \
+          gir1.2-appindicator3-0.1 && \
+          make
