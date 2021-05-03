@@ -54,9 +54,10 @@ jobs:
           brew install maven make && \
           wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-darwin-amd64-21.1.0.tar.gz && \
           tar -xzf graalvm-ce-java11-darwin-amd64-21.1.0.tar.gz && \
-          ./graalvm-ce-java11-21.1.0/Contents/Home/bin/gu install native-image && \
-          export PATH=./graalvm-ce-java11-21.1.0/Contents/Home/bin:$PATH && \
-          export JAVA_HOME=./graalvm-ce-java11-21.1.0/Contents/Home && \
+          sudo mv graalvm-ce-java11-21.1.0 /Library/Java/JavaVirtualMachines
+          export PATH=/Library/Java/JavaVirtualMachines/graalvm-ce-java11-21.1.0/Contents/Home/bin:$PATH && \
+          export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java11-21.1.0/Contents/Home && \
+          gu install native-image && \
           make macos
 
       - name: Upload macOS runner
