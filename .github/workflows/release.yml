@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -70,7 +70,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: 
+          upload_url: ${{ steps.get-release.outputs.upload_url }}
           asset_path: ./scripts/macos/target/Kogito.dmg
           asset_name: dmn_runner_macos_${{ steps.get-release.outputs.tag_name }}.dmg
           asset_content_type: application/octet-stream
@@ -94,7 +94,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: 
+          upload_url: ${{ steps.get-release.outputs.upload_url }}
           asset_path: ./build/linux/dmn_runner_linux.tar.gz
           asset_name: dmn_runner_linux_${{ steps.get-release.outputs.tag_name }}.tar.gz
           asset_content_type: application/tar+gzip

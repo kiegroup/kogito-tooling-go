@@ -90,23 +90,23 @@ jobs:
           name: dmn_runner_linux
           path: "./build/linux/dmn_runner_linux.tar.gz"
 
-      - name: Setup GraalVM
-        if: matrix.os == 'windows-latest'
-        run: |
-          curl.exe -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
-          unzip graalvm-ce-java11-windows-amd64-21.1.0.zip &&
-          echo ("PATH=" + "C:\Progra~1\Java\graalvm-ce-java11-21.1.0\bin;%PATH%") >> $GITHUB_ENV &&
-          echo ("JAVA_HOME=" + "C:\Progra~1\Java\graalvm-ce-java11-21.1.0") >> $GITHUB_ENV
+      # - name: Setup GraalVM
+      #   if: matrix.os == 'windows-latest'
+      #   run: |
+      #     curl.exe -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
+      #     unzip graalvm-ce-java11-windows-amd64-21.1.0.zip &&
+      #     echo ("PATH=" + "C:\Progra~1\Java\graalvm-ce-java11-21.1.0\bin;%PATH%") >> $GITHUB_ENV &&
+      #     echo ("JAVA_HOME=" + "C:\Progra~1\Java\graalvm-ce-java11-21.1.0") >> $GITHUB_ENV
 
-      - name: Build Windows
-        if: matrix.os == 'windows-latest'
-        run: |
-          gu install native-image &&
-          make win
+      # - name: Build Windows
+      #   if: matrix.os == 'windows-latest'
+      #   run: |
+      #     gu install native-image &&
+      #     make win
 
-      - name: Upload Windows runner
-        if: matrix.os == 'windows-latest'
-        uses: actions/upload-artifact@v2
-        with:
-          name: dmn_runner_windows
-          path: "./build/win/dmn_runner_windows"
+      # - name: Upload Windows runner
+      #   if: matrix.os == 'windows-latest'
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: dmn_runner_windows
+      #     path: "./build/win/dmn_runner_windows"
