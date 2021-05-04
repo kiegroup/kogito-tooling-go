@@ -5,3 +5,4 @@ package/
 out/
 
 jitexecutor
+.DS_Store
