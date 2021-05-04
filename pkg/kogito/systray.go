@@ -36,7 +36,7 @@ func (self *KogitoSystray) onReady() {
 	quitItem := systray.AddMenuItem(QUIT, QUIT)
 
 	self.Refresh()
-	go self.controller.Refresh()
+	go self.controller.Start()
 
 	for {
 		select {

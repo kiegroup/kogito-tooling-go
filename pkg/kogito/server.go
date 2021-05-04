@@ -87,7 +87,6 @@ func (self *Proxy) Start() {
 	go self.GracefulShutdown()
 
 	self.Refresh()
-
 }
 
 func (self *Proxy) GracefulShutdown() {

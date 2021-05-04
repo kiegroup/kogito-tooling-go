@@ -3,6 +3,7 @@ package main
 import (
 	_ "embed"
 	"flag"
+	"fmt"
 
 	"github.com/adrielparedes/kogito-local-server/pkg/config"
 	"github.com/adrielparedes/kogito-local-server/pkg/kogito"
@@ -15,6 +16,7 @@ var jitexecutor []byte
 func main() {
 	var config config.Config
 	conf := config.GetConfig()
+	fmt.Printf("Running on port: %d\n", conf.Proxy.Port)
 	port := flag.Int("p", conf.Proxy.Port, "DMN Runner Port")
 	flag.Parse()
 	kogito.Systray(*port, jitexecutor)
