@@ -31,7 +31,7 @@ build-linux:
 	GOOS=linux GOARCH=amd64 go build -o build/linux/dmn_runner main.go
 
 package-linux:
-	cd build/linux && tar -pcvzf dmn_runner-linux.tar.gz dmn_runner
+	cd build/linux && tar -pcvzf dmn_runner_linux.tar.gz dmn_runner
 
 # Windows
 win:clean all-jitexecutor build-win
@@ -43,7 +43,7 @@ build-win:
 all-jitexecutor: build-jitexecutor copy-jitexecutor
 
 build-jitexecutor:
-	mvn clean package -DskipTests -f ./kogito-apps/jitexecutor && mvn clean package -DskipTests -Pnative -f ./kogito-apps/jitexecutor
+	mvn clean package -DskipTests -f ./kogito-apps/jitexecutor && mvn clean package -DskipTests -Pnative -am -f ./kogito-apps/jitexecutor
 
 copy-jitexecutor:
 	cp ./kogito-apps/jitexecutor/jitexecutor-runner/target/jitexecutor-runner-*-SNAPSHOT-runner jitexecutor
