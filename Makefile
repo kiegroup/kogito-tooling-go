@@ -20,7 +20,7 @@ build-macos:
 	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/runner main.go
 
 package-macos:
-	./scripts/macos/build.sh
+	cd scripts/macos && build.sh
 
 # Linux
 linux: clean all-jitexecutor build-linux package-linux

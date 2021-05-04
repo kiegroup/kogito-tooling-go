@@ -16,9 +16,9 @@ mkdir -p $CONTENTS
 mkdir $MACOS
 mkdir $RESOURCES
 
-cp ./build/darwin/runner $MACOS/kogito
-cp ./scripts/macos/src/Info.plist $CONTENTS
-cp ./scripts/macos/src/Kogito.png $RESOURCES
+cp ../../build/darwin/runner $MACOS/kogito
+cp src/Info.plist $CONTENTS
+cp src/Kogito.png $RESOURCES
 ln -s /Applications $APPLICATIONS
 
 hdiutil create /tmp/tmp.dmg -ov -volname $NAME -fs HFS+ -srcfolder "target" 
