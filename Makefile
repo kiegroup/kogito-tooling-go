@@ -1,11 +1,10 @@
 
-all: all-jitexecutor build
+all: submodule all-jitexecutor build
 
 build: clean build-default
 
 build-default:
-	go build -o build/default/runner main.go
-	chmod +x ./build/default/runner
+	go build -o build/default/dmn-runner main.go
 
 run:
 	ENV=dev go run main.go
@@ -13,11 +12,14 @@ run:
 clean:
 	$(RM) -rf ./build
 
+submodule:
+	git submodule update
+
 # macOS
 macos: clean all-jitexecutor build-macos package-macos
 
 build-macos: 
-	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/runner main.go
+	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/dmn-runner main.go
 
 package-macos:
 	cd scripts/macos && ./build.sh
@@ -26,16 +28,16 @@ package-macos:
 linux: clean all-jitexecutor build-linux package-linux
 
 build-linux:
-	GOOS=linux GOARCH=amd64 go build -o build/linux/runner main.go
+	GOOS=linux GOARCH=amd64 go build -o build/linux/dmn-runner main.go
 
 package-linux:
-	cd build/linux && tar -pcvzf runner-linux.tar.gz runner
+	cd build/linux && tar -pcvzf dmn-runner-linux.tar.gz dmn-runner
 
 # Windows
 win:clean all-jitexecutor build-win
 
 build-win:
-	GOOS=windows GOARCH=386 go build -ldflags "-H=windowsgui" -o build/win/runner main.go
+	GOOS=windows GOARCH=386 go build -ldflags "-H=windowsgui" -o build/win/dmn-runner main.go
 
 # Jit Executor
 all-jitexecutor: build-jitexecutor copy-jitexecutor

@@ -2,7 +2,6 @@
 **/.idea
 target/
 package/
-out/
 
 jitexecutor
 .DS_Store
