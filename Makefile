@@ -18,10 +18,9 @@ macos: clean all-jitexecutor build-macos package-macos
 
 build-macos: 
 	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/runner main.go
-	chmod +x ./build/darwin/runner
 
 package-macos:
-	cd build/darwin && zip -qry runner-macos.zip runner
+	./scripts/macos/build.sh
 
 # Linux
 linux: clean all-jitexecutor build-linux package-linux

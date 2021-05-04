@@ -1,7 +1,7 @@
 #! /bin/bash
 
 
-APP=target/Kogito.app
+APP=../../out/macos/Kogito.app
 CONTENTS=$APP/Contents
 MACOS=$CONTENTS/MacOs
 RESOURCES=$CONTENTS/Resources
@@ -10,7 +10,7 @@ DMG=$NAME.dmg
 APPLICATIONS=target/Applications
 
 
-rm -rf target
+rm -rf ../../out/macos
 rm -rf Kogito.dmg
 
 mkdir -p $CONTENTS
@@ -24,3 +24,4 @@ ln -s /Applications $APPLICATIONS
 
 hdiutil create /tmp/tmp.dmg -ov -volname $NAME -fs HFS+ -srcfolder "target" 
 hdiutil convert /tmp/tmp.dmg -format UDZO -o Kogito.dmg
+mv Kogito.dmn ../../out
