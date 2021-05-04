@@ -41,10 +41,13 @@ jobs:
         with:
           go-version: '1.16'
 
+      - name: Set long paths for Windows
+        if: matrix.os == 'windows-latest'
+        run: git config --system core.longpaths true
+
       - name: Checkout submodules
         shell: bash
         run: |
-          git config --system core.longpaths true
           auth_header="$(git config --local --get http.https://github.com/.extraheader)"
           git submodule sync --recursive
           git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
@@ -65,7 +68,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         uses: actions/upload-artifact@v2
         with:
-          name: dmn-runner-macos
+          name: dmn_runner_macos
           path: "./scripts/macos/target/Kogito.dmg"
 
       - name: Build Linux
@@ -84,8 +87,8 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v2
         with:
-          name: dmn-runner-linux
-          path: "./build/linux/dmn-runner-linux.tar.gz"
+          name: dmn_runner_linux
+          path: "./build/linux/dmn_runner_linux.tar.gz"
 
       - name: Setup GraalVM
         if: matrix.os == 'windows-latest'
@@ -105,5 +108,5 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v2
         with:
-          name: dmn-runner-windows
-          path: "./build/win/dmn-runner-windows"
+          name: dmn_runner_windows
+          path: "./build/win/dmn_runner_windows"
