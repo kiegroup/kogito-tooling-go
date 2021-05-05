@@ -95,7 +95,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: msys2/setup-msys2@v2
 
-      - name: Setup GraalVM
+      - name: Build Windows
         if: matrix.os == 'windows-latest'
         shell: msys2 {0}
         run: |
@@ -104,10 +104,6 @@ jobs:
           export PATH=/d/a/kogito-local-server/kogito-local-server/graalvm-ce-java11-21.1.0/bin:$PATH &&
           export JAVA_HOME=/d/a/kogito-local-server/kogito-local-server/graalvm-ce-java11-21.1.0 &&
           gu.cmd install native-image
-
-      - name: Build Windows
-        if: matrix.os == 'windows-latest'
-        run: |
           make win
 
       - name: Upload Windows runner
