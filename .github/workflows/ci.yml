@@ -97,8 +97,8 @@ jobs:
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           dir &&
           cd &&
-          set PATH=%PATH%;%cd%\graalvm-ce-java11-21.1.0\bin &&
-          set JAVA_HOME=%cd%\graalvm-ce-java11-21.1.0
+          set PATH=%PATH%;D:\a\kogito-local-server\kogito-local-server\graalvm-ce-java11-21.1.0\bin &&
+          set JAVA_HOME=D:\a\kogito-local-server\kogito-local-server\\graalvm-ce-java11-21.1.0
 
       - name: Build Windows
         if: matrix.os == 'windows-latest'
