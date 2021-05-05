@@ -92,11 +92,13 @@ jobs:
 
       - name: Setup GraalVM
         if: matrix.os == 'windows-latest'
+      - uses: msys2/setup-msys2@v2
+      - shell: msys2 {0}
         run: |
           curl -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
-          dir &&
-          cd &&
+          ls -la &&
+          pwd &&
           set PATH=%PATH%;D:\a\kogito-local-server\kogito-local-server\graalvm-ce-java11-21.1.0\bin &&
           set JAVA_HOME=D:\a\kogito-local-server\kogito-local-server\\graalvm-ce-java11-21.1.0
 
