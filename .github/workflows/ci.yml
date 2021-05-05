@@ -101,12 +101,6 @@ jobs:
         run: |
           curl -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
-          ls &&
-          pwd &&
-          cd graalvm-ce-java11-21.1.0 &&
-          pwd &&
-          cd bin &&
-          ls -la &&
           export PATH=/d/a/kogito-local-server/kogito-local-server/graalvm-ce-java11-21.1.0/bin:$PATH &&
           export JAVA_HOME=/d/a/kogito-local-server/kogito-local-server/graalvm-ce-java11-21.1.0 &&
           gu.cmd install native-image
