@@ -102,12 +102,12 @@ jobs:
           curl -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           export PATH=/d/a/kogito-local-server/graalvm-ce-java11-21.1.0/bin:$PATH &&
-          export JAVA_HOME=/d/a/kogito-local-server/graalvm-ce-java11-21.1.0
+          export JAVA_HOME=/d/a/kogito-local-server/graalvm-ce-java11-21.1.0 &&
+          gu.cmd install native-image &&
 
       - name: Build Windows
         if: matrix.os == 'windows-latest'
         run: |
-          gu.cmd install native-image &&
           make win
 
       - name: Upload Windows runner
