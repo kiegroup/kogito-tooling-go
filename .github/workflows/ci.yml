@@ -95,6 +95,7 @@ jobs:
         run: |
           curl -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
+          dir &&
           cd &&
           set PATH=%PATH%;%cd%\graalvm-ce-java11-21.1.0\bin &&
           set JAVA_HOME=%cd%\graalvm-ce-java11-21.1.0
