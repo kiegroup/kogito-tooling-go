@@ -37,7 +37,7 @@ package-linux:
 win: clean all-jitexecutor build-win
 
 build-win:
-	GOOS=windows GOARCH=386 go build -ldflags "-H=windowsgui" -o build/win/dmn_runner main.go
+	GOOS=windows GOARCH=amd64 GO111MODULE=on go build -o build/win/dmn_runner.exe main.go
 
 # Jit Executor
 all-jitexecutor: build-jitexecutor copy-jitexecutor
