@@ -34,7 +34,7 @@ package-linux:
 	cd build/linux && tar -pcvzf dmn_runner_linux.tar.gz dmn_runner
 
 # Windows
-win:clean all-jitexecutor build-win
+win: clean all-jitexecutor build-win
 
 build-win:
 	GOOS=windows GOARCH=386 go build -ldflags "-H=windowsgui" -o build/win/dmn_runner main.go
@@ -43,7 +43,10 @@ build-win:
 all-jitexecutor: build-jitexecutor copy-jitexecutor
 
 build-jitexecutor:
-	mvn clean package -DskipTests -f ./kogito-apps/jitexecutor && mvn clean package -DskipTests -Pnative -am -f ./kogito-apps/jitexecutor
+	mvn clean package -DskipTests -f ./kogito-apps/jitexecutor
+
+build-jitexecutor-2:
+	mvn clean package -DskipTests -Pnative -am -f ./kogito-apps/jitexecutor
 
 copy-jitexecutor:
 	cp ./kogito-apps/jitexecutor/jitexecutor-runner/target/jitexecutor-runner-*-SNAPSHOT-runner jitexecutor
