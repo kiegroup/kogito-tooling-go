@@ -94,6 +94,10 @@ jobs:
       - name: Set MSYS2
         if: matrix.os == 'windows-latest'
         uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            base-devel
 
       - name: Build Windows
         if: matrix.os == 'windows-latest'
