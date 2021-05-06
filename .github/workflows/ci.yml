@@ -105,8 +105,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           gu.cmd install native-image &&
-          fsutil volume diskfree d: &&
-          make win
+          fsutil volume diskfree d:
 
       - name: Upload Windows runner
         if: matrix.os == 'windows-latest'
