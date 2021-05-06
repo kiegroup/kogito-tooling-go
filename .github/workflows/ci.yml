@@ -89,6 +89,9 @@ jobs:
       #   with:
       #     name: dmn_runner_linux
       #     path: "./build/linux/dmn_runner_linux.tar.gz"
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
 
       - name: Set GraalVM
         if: matrix.os == 'windows-latest'
