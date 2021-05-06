@@ -95,13 +95,14 @@ jobs:
         run: |
           curl -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
-          echo "$HOME/kogito-local-server/graalvm-ce-java11-21.1.0/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          echo "JAVA_HOME=$HOME/kogito-local-server/graalvm-ce-java11-21.1.0" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "$HOME/kogito-local-server\graalvm-ce-java11-21.1.0\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "JAVA_HOME=$HOME/kogito-local-server\graalvm-ce-java11-21.1.0" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           echo $GITHUB_PATH &&
           echo "$GITHUB_PATH" &&
           echo $PATH &&
           echo "$PATH" &&
-          echo $GITHUB_ENV
+          echo $GITHUB_ENV &&
+          $GITHUB_ENV
 
       - name: Upload Windows runner
         if: matrix.os == 'windows-latest'
