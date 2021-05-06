@@ -90,19 +90,19 @@ jobs:
       #     name: dmn_runner_linux
       #     path: "./build/linux/dmn_runner_linux.tar.gz"
 
-      - name: Build Windows
+      - name: Set GraalVM
         if: matrix.os == 'windows-latest'
         run: |
           curl -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
-          echo "D:\a\kogito-local-server\kogito-local-server\graalvm-ce-java11-21.1.0\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          echo "D:\a\kogito-local-server\kogito-local-server\graalvm-ce-java11-21.1.0\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append &&
           echo "JAVA_HOME=D:\a\kogito-local-server\kogito-local-server\graalvm-ce-java11-21.1.0" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          echo $GITHUB_PATH &&
-          echo "$GITHUB_PATH" &&
-          echo $PATH &&
-          echo "$PATH" &&
-          echo $GITHUB_ENV &&
-          $GITHUB_ENV
+
+      - name: Build Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          gu.cmd install native-image &&
+          make win
 
       - name: Upload Windows runner
         if: matrix.os == 'windows-latest'
