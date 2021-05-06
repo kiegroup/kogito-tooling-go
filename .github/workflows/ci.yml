@@ -105,7 +105,6 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           gu.cmd install native-image &&
-          make build-jitexecutor &&
           make win
 
       - name: Upload Windows runner
