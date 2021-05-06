@@ -97,7 +97,11 @@ jobs:
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           echo "D:\a\kogito-local-server\kogito-local-server\graalvm-ce-java11-21.1.0\bin" >> $GITHUB_PATH &&
           echo "D:\a\kogito-local-server\kogito-local-server\graalvm-ce-java11-21.1.0" >> $JAVA_HOME &&
-          gu.cmd install native-image
+          dir &&
+          cd graalvm-ce-java11-21.1.0\bin &&
+          dir &&
+          cd &&
+          gu.cmd install native-image &&
           make win
 
       - name: Upload Windows runner
