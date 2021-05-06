@@ -90,31 +90,16 @@ jobs:
           name: dmn_runner_linux
           path: "./build/linux/dmn_runner_linux.tar.gz"
 
-
-      - name: Set MSYS2
-        if: matrix.os == 'windows-latest'
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: >-
-            base-devel
-
-      - name: Set up JDK 11
-        if: matrix.os == 'windows-latest'
-        shell: msys2 {0}
-        uses: actions/setup-java@v1
-        with:
-          java-version: "11"
-
       - name: Build Windows
         if: matrix.os == 'windows-latest'
-        shell: msys2 {0}
         run: |
           curl -L -o graalvm-ce-java11-windows-amd64-21.1.0.zip  https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-21.1.0/graalvm-ce-java11-windows-amd64-21.1.0.zip &&
           tar -xf graalvm-ce-java11-windows-amd64-21.1.0.zip &&
-          export PATH=/d/a/kogito-local-server/kogito-local-server/graalvm-ce-java11-21.1.0/bin:$PATH &&
-          export JAVA_HOME=/d/a/kogito-local-server/kogito-local-server/graalvm-ce-java11-21.1.0 &&
-          gu.cmd install native-image
+          echo "$HOME/kogito-local-server/graalvm-ce-java11-21.1.0/bin" >> $GITHUB_PATH &&
+          echo "JAVA_HOME=$HOME/kogito-local-server/graalvm-ce-java11-21.1.0" >> $GITHUB_ENV &&
+          echo $GITHUB_PATH &&
+          echo $GITHUB_ENV &&
+          gu.cmd install native-image &&
           make win
 
       - name: Upload Windows runner
