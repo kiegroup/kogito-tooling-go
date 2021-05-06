@@ -43,10 +43,10 @@ build-win:
 all-jitexecutor: build-jitexecutor copy-jitexecutor
 
 build-jitexecutor:
-	mvn clean package -DskipTests -f ./kogito-apps/jitexecutor
+	mvn clean package -B -DskipTests -f ./kogito-apps/jitexecutor
 
 build-jitexecutor-2:
-	mvn clean package -DskipTests -Pnative -am -f ./kogito-apps/jitexecutor
+	mvn clean package -B -DskipTests -Pnative -am -f ./kogito-apps/jitexecutor
 
 copy-jitexecutor:
 	cp ./kogito-apps/jitexecutor/jitexecutor-runner/target/jitexecutor-runner-*-SNAPSHOT-runner jitexecutor
