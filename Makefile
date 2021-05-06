@@ -34,7 +34,7 @@ package-linux:
 	cd build/linux && tar -pcvzf dmn_runner_linux.tar.gz dmn_runner
 
 # Windows
-win: clean all-jitexecutor build-win
+win: clean build-jitexecutor copy-jitexecutor-win build-win
 
 build-win:
 	GOOS=windows GOARCH=amd64 GO111MODULE=on go build -o build/win/dmn_runner.exe main.go
@@ -48,3 +48,6 @@ build-jitexecutor:
 copy-jitexecutor:
 	cp ./kogito-apps/jitexecutor/jitexecutor-runner/target/jitexecutor-runner-*-SNAPSHOT-runner jitexecutor
 	chmod +x jitexecutor
+
+copy-jitexecutor-win:
+	cp ./kogito-apps/jitexecutor/jitexecutor-runner/target/jitexecutor-runner-*-SNAPSHOT-runner.exe jitexecutor

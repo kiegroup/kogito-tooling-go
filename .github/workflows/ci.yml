@@ -106,9 +106,7 @@ jobs:
         run: |
           gu.cmd install native-image &&
           make build-jitexecutor &&
-          cd .\kogito-apps\jitexecutor\jitexecutor-runner\target &&
-          dir
-
+          make win
 
       - name: Upload Windows runner
         if: matrix.os == 'windows-latest'
