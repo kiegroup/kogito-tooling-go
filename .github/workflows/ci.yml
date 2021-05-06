@@ -106,12 +106,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           gu.cmd install native-image &&
-          fsutil volume diskfree d: &&
-          make build-jitexecutor &&
-          fsutil volume diskfree d: &&
-          make build-jitexecutor-2 &&
-          fsutil volume diskfree d: &&
-          make build-win
+          make win
 
       - name: Upload Windows runner
         if: matrix.os == 'windows-latest'
