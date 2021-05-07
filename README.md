@@ -57,4 +57,8 @@ In the `config.yaml` file you will be able to configure Proxy, Runner and Modele
 
 ### How do I create the image.go?
 
+Firstly install the 2goarray package
+`go get github.com/cratonica/2goarray`
+
+Then convert the image to a .go file
 `cat icon2.png | /Users/aparedes/go/bin/2goarray Data images > icon.go`

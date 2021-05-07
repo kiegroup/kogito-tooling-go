@@ -3,6 +3,7 @@ package kogito
 import (
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"runtime"
 	"strconv"
@@ -26,7 +27,14 @@ func (self *KogitoSystray) Run() {
 
 func (self *KogitoSystray) onReady() {
 
-	systray.SetTemplateIcon(images.Data, images.Data)
+	fmt.Printf("os env : %s", os.Getenv("GOOS"))
+
+	if os.Getenv("GOOS") == "windows" {
+		systray.SetTemplateIcon(images.DataWin, images.DataWin)
+	} else {
+		systray.SetTemplateIcon(images.Data, images.Data)
+	}
+
 	systray.SetTooltip(NAME)
 
 	self.mainSection()
