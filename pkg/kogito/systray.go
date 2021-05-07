@@ -82,8 +82,6 @@ func (self *KogitoSystray) mainSection() {
 	self.StatusItem = systray.AddMenuItem(SERVER_STATUS, SERVER_STATUS)
 	self.StatusItem.Disable()
 
-	systray.AddMenuItem(OTHER_KOGITO_SERVICES, OTHER_KOGITO_SERVICES)
-
 	self.informationMenu()
 }
 

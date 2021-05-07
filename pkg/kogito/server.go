@@ -69,7 +69,7 @@ func (self *Proxy) Start() {
 	proxy := httputil.NewSingleHostReverseProxy(target)
 
 	r := mux.NewRouter()
-	r.HandleFunc("/ping", pingHandler)
+	r.HandleFunc("/ping", pingHandler(runnerPort))
 	r.PathPrefix("/").HandlerFunc(proxyHandler(proxy, self.cmd))
 
 	addr := conf.Proxy.IP + ":" + strconv.Itoa(self.Port)
@@ -176,13 +176,20 @@ func proxyHandler(proxy *httputil.ReverseProxy, cmd *exec.Cmd) func(w http.Respo
 	}
 }
 
-func pingHandler(w http.ResponseWriter, r *http.Request) {
-	var config config.Config
-	conf := config.GetConfig()
-	w.WriteHeader(http.StatusOK)
-	// result := map[string]string{"status": "ok"}
-	json, _ := json.Marshal(conf)
-	w.Write(json)
+func pingHandler(runnerPort string) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var config config.Config
+		conf := config.GetConfig()
+		port, err := strconv.Atoi(runnerPort)
+		if err != nil {
+			conf.Proxy.Port = port
+			w.WriteHeader(http.StatusOK)
+			// result := map[string]string{"status": "ok"}
+			json, _ := json.Marshal(conf)
+			w.Write(json)
+		}
+
+	}
 }
 
 func startRunner(cmd *exec.Cmd) {
