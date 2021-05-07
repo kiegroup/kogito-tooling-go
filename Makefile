@@ -37,7 +37,7 @@ package-linux:
 win: clean build-jitexecutor copy-jitexecutor-win build-win
 
 build-win:
-	GOOS=windows GOARCH=amd64 GO111MODULE=on go build -ldflags "-X main.Os=%GOOS%" -o build/win/dmn_runner.exe main.go
+	GOOS=windows GOARCH=amd64 GO111MODULE=on go build -o build/win/dmn_runner.exe main.go
 
 # Jit Executor
 all-jitexecutor: build-jitexecutor copy-jitexecutor
