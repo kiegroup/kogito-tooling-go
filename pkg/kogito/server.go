@@ -69,7 +69,7 @@ func (self *Proxy) Start() {
 	proxy := httputil.NewSingleHostReverseProxy(target)
 
 	r := mux.NewRouter()
-	r.HandleFunc("/ping", pingHandler(runnerPort))
+	r.PathPrefix("/ping").HandlerFunc(pingHandler(self.Port))
 	r.PathPrefix("/").HandlerFunc(proxyHandler(proxy, self.cmd))
 
 	addr := conf.Proxy.IP + ":" + strconv.Itoa(self.Port)
@@ -113,8 +113,6 @@ func (self *Proxy) Stop() {
 		log.Fatalf("Server Shutdown Failed:%+v", err)
 	}
 	log.Println("Shutdown complete")
-	self.RunnerPort = 0
-	self.Refresh()
 }
 
 func (self *Proxy) Refresh() {
@@ -176,19 +174,14 @@ func proxyHandler(proxy *httputil.ReverseProxy, cmd *exec.Cmd) func(w http.Respo
 	}
 }
 
-func pingHandler(runnerPort string) func(w http.ResponseWriter, r *http.Request) {
+func pingHandler(port int) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var config config.Config
 		conf := config.GetConfig()
-		port, err := strconv.Atoi(runnerPort)
-		if err != nil {
-			conf.Proxy.Port = port
-			w.WriteHeader(http.StatusOK)
-			// result := map[string]string{"status": "ok"}
-			json, _ := json.Marshal(conf)
-			w.Write(json)
-		}
-
+		conf.Proxy.Port = port
+		w.WriteHeader(http.StatusOK)
+		json, _ := json.Marshal(conf)
+		w.Write(json)
 	}
 }
 
