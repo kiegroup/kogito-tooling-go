@@ -176,6 +176,8 @@ func proxyHandler(proxy *httputil.ReverseProxy, cmd *exec.Cmd) func(w http.Respo
 
 func pingHandler(port int) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Access-Control-Allow-Methods", "GET")
 		var config config.Config
 		conf := config.GetConfig()
 		conf.Proxy.Port = port
