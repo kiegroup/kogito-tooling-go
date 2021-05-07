@@ -14,7 +14,7 @@ mkdir -p "$CONTENTS"
 mkdir "$MACOS"
 mkdir "$RESOURCES"
 
-cp ../../build/darwin/runner "$MACOS"/kogito
+cp ../../build/darwin/dmn_runner "$MACOS"/kogito
 cp src/Info.plist "$CONTENTS"
 cp src/KogitoLogo.png "$RESOURCES"
 ln -s /Applications $APPLICATIONS
