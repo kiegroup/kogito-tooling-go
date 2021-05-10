@@ -17,8 +17,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/adrielparedes/kogito-local-server/pkg/config"
-	"github.com/adrielparedes/kogito-local-server/pkg/utils"
+	"github.com/kiegroup/kogito-tooling-go/pkg/config"
+	"github.com/kiegroup/kogito-tooling-go/pkg/utils"
 	"github.com/gorilla/mux"
 	"github.com/phayes/freeport"
 )

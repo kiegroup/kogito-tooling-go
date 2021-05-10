@@ -1,4 +1,4 @@
-module github.com/adrielparedes/kogito-local-server
+module github.com/kiegroup/kogito-tooling-go
 
 go 1.16
 

@@ -4,8 +4,8 @@ import (
 	_ "embed"
 	"flag"
 
-	"github.com/adrielparedes/kogito-local-server/pkg/config"
-	"github.com/adrielparedes/kogito-local-server/pkg/kogito"
+	"github.com/kiegroup/kogito-tooling-go/pkg/config"
+	"github.com/kiegroup/kogito-tooling-go/pkg/kogito"
 )
 
 // Embed the jitrunner into the runner variable, to produce a self-contained binary.

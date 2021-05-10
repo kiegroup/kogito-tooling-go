@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strconv"
 
-	"github.com/adrielparedes/kogito-local-server/pkg/images"
+	"github.com/kiegroup/kogito-tooling-go/pkg/images"
 	"github.com/getlantern/systray"
 )
 

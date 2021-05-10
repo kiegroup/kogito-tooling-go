@@ -1,4 +1,8 @@
-# Kogito Local Server
+# kogito-tooling-go
+
+Go applications for Kogito Tooling. Right now we have:
+
+- DMN Runner backend
 
 ## Requirements
 
@@ -14,21 +18,12 @@ To run simply execute `make run`.
 
 ## Build
 
-So far the build was tested on MacOs
-
-To build execute `make build` from root path.
-
-For specific platforms please execute:
-
-- `make mac`
+To build execute the following commands from root path. Please use the one suited for your current OS.
+- `make macos`
 - `make win`
 - `make linux`
 
-The binaries are going to appear in each OS folder. But if you execute just `make build` the `default` folder will contain the binaries.
-
-## Runner
-
-The runner must be compiled from the "kogito-apps" repository and copied to the `pkg/kogito` folder.
+The binaries are going to appear in the `build` folder.
 
 ## Fedora
 
@@ -45,15 +40,7 @@ https://extensions.gnome.org/extension/615/appindicator-support/
 In the `config.yaml` file you will be able to configure Proxy, Runner and Modeler properties as runner location or modeler URL. Runner ip is `127.0.0.1` and port is a random free port.
 
 ## Next Steps
-
-- Change Java Quarkus with Native Quarkus runner
-- Provide compilation pipeline for Windows
-- Provide compilation pipeline for Linux
 - Limit GraalVM Heap Size
-- Check version alignment between Online Editor and DMN Runner.
-- Installers for all platforms
-
-## Extrass
 
 ### How do I create the image.go?
 

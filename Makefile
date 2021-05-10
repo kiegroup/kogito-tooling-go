@@ -1,10 +1,5 @@
-
-all: submodule all-jitexecutor build
-
-build: clean build-default
-
-build-default:
-	go build -o build/default/dmn_runner main.go
+all:
+	$(error "Please use OS-specific commands to build.")
 
 run:
 	ENV=dev go run main.go
@@ -16,7 +11,7 @@ submodule:
 	git submodule update
 
 # macOS
-macos: clean all-jitexecutor build-macos package-macos
+macos: clean build-jitexecutor copy-jitexecutor build-macos package-macos
 
 build-macos: 
 	GO111MODULE=on GOOS=darwin GOARCH=amd64 go build -o build/darwin/dmn_runner main.go
@@ -25,7 +20,7 @@ package-macos:
 	cd scripts/macos && ./build.sh
 
 # Linux
-linux: clean all-jitexecutor build-linux package-linux
+linux: clean build-jitexecutor copy-jitexecutor build-linux package-linux
 
 build-linux:
 	GOOS=linux GOARCH=amd64 go build -o build/linux/dmn_runner main.go
@@ -39,9 +34,8 @@ win: clean build-jitexecutor copy-jitexecutor-win build-win
 build-win:
 	GOOS=windows GOARCH=amd64 GO111MODULE=on go build -o build/win/dmn_runner.exe main.go
 
-# Jit Executor
-all-jitexecutor: build-jitexecutor copy-jitexecutor
 
+# JIT Executor
 build-jitexecutor:
 	mvn clean package -B -DskipTests -f ./kogito-apps/jitexecutor && mvn clean package -B -DskipTests -Pnative -am -f ./kogito-apps/jitexecutor
 
