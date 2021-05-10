@@ -34,8 +34,9 @@ func (self *KogitoSystray) onReady() {
 	systray.AddSeparator()
 	quitItem := systray.AddMenuItem(QUIT, QUIT)
 
-	self.Refresh()
+	self.StartStopItem.SetTitle(STARTING)
 	go self.controller.Start()
+
 
 	for {
 		select {
@@ -68,11 +69,13 @@ func (self *KogitoSystray) onExit() {
 
 func (self *KogitoSystray) Start() {
 	fmt.Println("Executing Start command")
+	self.StartStopItem.SetTitle(STARTING)
 	self.controller.Start()
 }
 
 func (self *KogitoSystray) Stop() {
 	fmt.Println("Executing Stop command")
+	self.StartStopItem.SetTitle(STOPPING)
 	self.controller.Stop()
 }
 

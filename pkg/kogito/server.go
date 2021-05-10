@@ -113,6 +113,10 @@ func (self *Proxy) Stop() {
 		log.Fatalf("Server Shutdown Failed:%+v", err)
 	}
 	log.Println("Shutdown complete")
+
+
+	self.RunnerPort = 0;
+	self.Refresh();
 }
 
 func (self *Proxy) Refresh() {
