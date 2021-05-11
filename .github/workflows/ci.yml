@@ -97,7 +97,7 @@ jobs:
 
       - name: Set JAVA_OPTS
         if: matrix.os == 'windows-latest'
-        run: SET JAVA_OPTS="-Xms512m -Xmx2g"
+        run: SET JAVA_OPTS="-Xms1g -Xmx4g"
 
       - name: Set GraalVM
         if: matrix.os == 'windows-latest'
