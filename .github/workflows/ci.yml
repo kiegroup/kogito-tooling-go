@@ -35,6 +35,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           choco upgrade -y visualstudio2017-workload-vctools
+          choco upgrade visualstudio2019enterprise
           choco install visualstudio2017-workload-vctools
 
       - name: Set up JDK 11
