@@ -93,7 +93,10 @@ jobs:
 
       - name: setup-msbuild
         if: matrix.os == 'windows-latest'
-        uses: microsoft/setup-msbuild@v1  
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Set JAVA_OPTS
+        run: SET JAVA_OPTS="-Xms512m -Xmx2g"
 
       - name: Set GraalVM
         if: matrix.os == 'windows-latest'
