@@ -129,14 +129,3 @@ jobs:
         with:
           name: dmn_runner_windows
           path: "./build/win/dmn_runner.exe"
-
-
-
-                      
-                          
-
-                      - name: Build Windows
-                        if: matrix.os == 'windows-latest'
-                        run: |
-                          gu.cmd install native-image &&
-                          make win
