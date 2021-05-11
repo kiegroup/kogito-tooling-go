@@ -34,7 +34,8 @@ jobs:
       - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
         if: matrix.os == 'windows-latest'
         run: |
-          choco install visualstudio2019-workload-vctools
+          choco upgrade -y visualstudio2017-workload-vctools
+          choco install visualstudio2017-workload-vctools
 
       - name: Set up JDK 11
         if: matrix.os != 'windows-latest'
@@ -110,7 +111,7 @@ jobs:
         env:
           JAVA_HOME: ./graalvm-ce-java11-21.1.0
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make win
 
       - name: Upload Windows runner
