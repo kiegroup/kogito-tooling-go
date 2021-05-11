@@ -12,10 +12,6 @@ Golang version: `1.16`
 
 - `-p <PORT_NUMBER>`: Sets app port, otherwise it will use config.yaml port.
 
-## Run
-
-To run simply execute `make run`.
-
 ## Build and run
 
 First thing to do it init the git submodule of `kogito-apps`. Run:
