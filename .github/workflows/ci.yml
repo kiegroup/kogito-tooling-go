@@ -104,18 +104,13 @@ jobs:
           name: dmn_runner_linux
           path: "./build/linux/dmn_runner_linux.tar.gz"
 
-      - name: Setup PATH
-        run: |
-          echo "D:\a\kogito-tooling-go\kogito-tooling-go\graalvm-ce-java11-21.1.0\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append &&
-          echo "JAVA_HOME=D:\a\kogito-tooling-go\kogito-tooling-go\graalvm-ce-java11-21.1.0" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-
       - name: Build Windows
         if: matrix.os == 'windows-latest'
         shell: cmd
         env:
           JAVA_HOME: ./graalvm-ce-java11-21.1.0
         run: |
-          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+          call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" x64
           make win
 
       - name: Upload Windows runner
