@@ -91,6 +91,10 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
 
+      - name: setup-msbuild
+        if: matrix.os == 'windows-latest'
+        uses: microsoft/setup-msbuild@v1  
+
       - name: Set GraalVM
         if: matrix.os == 'windows-latest'
         run: |
