@@ -92,7 +92,6 @@ func (self *KogitoSystray) mainSection() {
 func (self *KogitoSystray) informationMenu() {
 	information := systray.AddMenuItem(INFORMATION, "")
 
-
 	var config config.Config
 	conf := config.GetConfig()
 
