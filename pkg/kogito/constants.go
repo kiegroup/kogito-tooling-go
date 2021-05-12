@@ -1,7 +1,7 @@
 package kogito
 
 const NAME = "Kogito"
-const ASD = "Kogito DMN Runner"
+const APPNAME = "Kogito DMN Runner"
 const SERVER_STATUS = "DMN Runner Status"
 const SERVER_STATUS_ON = SERVER_STATUS + ": ON"
 const SERVER_STATUS_OFF = SERVER_STATUS + ": OFF"

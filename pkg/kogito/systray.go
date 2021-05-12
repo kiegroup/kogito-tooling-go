@@ -25,7 +25,7 @@ func (self *KogitoSystray) Run() {
 
 func (self *KogitoSystray) onReady() {
 	systray.SetTemplateIcon(images.DataStarted, images.DataStarted)
-	systray.SetTooltip(ASD)
+	systray.SetTooltip(APPNAME)
 
 	self.mainSection()
 	systray.AddSeparator()
