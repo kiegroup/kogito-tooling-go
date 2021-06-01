@@ -59,7 +59,7 @@ jobs:
           export PATH=/Library/Java/JavaVirtualMachines/graalvm-ce-java11-21.1.0/Contents/Home/bin:$PATH && \
           export GRAALVM_HOME=/Library/Java/JavaVirtualMachines/graalvm-ce-java11-21.1.0/Contents/Home && \
           gu install native-image && \
-          make macos
+          make macos-snapshot
 
       - name: Upload macOS runner
         if: matrix.os == 'macos-latest'
@@ -78,7 +78,7 @@ jobs:
           libgtk-3-dev \
           libappindicator3-dev \
           gir1.2-appindicator3-0.1 && \
-          make linux
+          make linux-snapshot
 
       - name: Upload Linux runner
         if: matrix.os == 'ubuntu-latest'
@@ -103,7 +103,7 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: |
           gu.cmd install native-image &&
-          make win
+          make win-snapshot
 
       - name: Upload Windows runner
         if: matrix.os == 'windows-latest'
