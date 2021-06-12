@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-2016]
 
     steps:
       - uses: actions/checkout@v2
@@ -116,10 +116,6 @@ jobs:
         env:
           JAVA_HOME: ./graalvm-ce-java11-21.1.0
         run: |
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary"
-          dir "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build"
           call "C:\Program Files (x86)\Microsoft Visual Studio\2017\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
           make win
 
