@@ -113,10 +113,9 @@ jobs:
         if: matrix.os == 'windows-2016'
         run: graalvm-ce-java11-21.1.0\bin\gu.cmd install native-image
 
-      - name: Set up Visual C Build Tools Workload for Visual Studio 2017 Build Tools
+      - name: Add msbuild to PATH
         if: matrix.os == 'windows-2016'
-        run: |
-          choco install visualstudio2017-workload-vctools
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Set GraalVM
         if: matrix.os == 'windows-2016'
