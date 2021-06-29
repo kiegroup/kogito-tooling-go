@@ -16,7 +16,7 @@ mkdir "$RESOURCES"
 
 cp ../../build/darwin/kie_tooling_extended_services "$MACOS"/kogito
 cp src/Info.plist "$CONTENTS"
-cp src/KogitoLogo.png "$RESOURCES"
+cp src/KieLogo.png "$RESOURCES"
 ln -s /Applications $APPLICATIONS
 
 hdiutil create /tmp/tmp.dmg -ov -volname Kogito -fs HFS+ -srcfolder "target" 
